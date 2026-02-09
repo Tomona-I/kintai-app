@@ -1,0 +1,94 @@
+body {
+    background-color: #f0eff2;
+    margin: 0;
+    padding: 0;
+}
+
+.application-list {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.application-list__title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 60px;
+    color: #333;
+    position: relative;
+    padding-left: 20px;
+}
+
+.application-list__title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 1.2em;
+    background-color: #000;
+    border-radius: 2px;
+}
+
+.tab-navigation {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 60px;
+    border-bottom: 2px solid #000000;
+    padding-bottom: 10px;
+}
+
+.tab-button {
+    padding: 0 0 5px 0;
+    margin-left: 60px;
+    font-size: 18px;
+    font-weight: normal;
+    border: none;
+    background: none;
+    color: #000000;
+    cursor: pointer;
+}
+
+.tab-button--active {
+    font-weight: bold;
+}
+
+.application-table {
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    border-collapse: collapse;
+}
+
+.application-table th {
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #737373;
+    font-size: 18px;
+}
+
+.application-table td {
+    padding: 20px;
+    text-align: center;
+    color: #737373;
+    font-size: 18px;
+    font-weight: bold;
+    border-top: 3px solid #f0f0f0;
+}
+
+.application-table tbody tr:first-child td {
+    border-top: 5px solid #f0f0f0;
+}
+
+.detail-link {
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.detail-link:hover {
+    text-decoration: underline;
+}

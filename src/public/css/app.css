@@ -1,0 +1,48 @@
+/* ヘッダーの共通スタイル */
+.header {
+    background-color: #000000;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.header__logo img {
+    display: block;
+}
+
+.header__nav {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.nav-link {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    opacity: 0.8;
+}
+
+.logout-form {
+    margin: 0;
+}
+
+.nav-link--logout {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.nav-link--logout:hover {
+    opacity: 0.8;
+}

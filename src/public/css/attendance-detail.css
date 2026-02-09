@@ -1,0 +1,181 @@
+body {
+    background-color: #f0eff2;
+    margin: 0;
+    padding: 0;
+}
+
+.attendance-detail {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.attendance-detail__title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    color: #333;
+    position: relative;
+    padding-left: 20px;
+}
+
+.attendance-detail__title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 1.2em;
+    background-color: #000;
+    border-radius: 2px;
+}
+
+.detail-form {
+    width: 100%;
+}
+
+.detail-table {
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    border-collapse: collapse;
+}
+
+.detail-table th {
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #737373;
+    font-size: 18px;
+    width: 20%;
+    border-top: 3px solid #f0f0f0;
+}
+
+.detail-table td {
+    padding: 20px;
+    text-align: center;
+    color: #000000;
+    font-size: 18px;
+    font-weight: bold;
+    border-top: 3px solid #f0f0f0;
+}
+
+.detail-table tr:first-child th,
+.detail-table tr:first-child td {
+    border-top: none;
+}
+
+.name-cell {
+    text-align: right;
+}
+
+.date-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 220px;
+}
+
+.time-input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+}
+
+.time-input {
+    padding: 8px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", sans-serif;
+    color: #000;
+    border: 1px solid #d0d0d0;
+    border-radius: 6px;
+    background-color: #ffffff;
+}
+
+.time-input::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+.time-input:focus {
+    outline: none;
+    border-color: #737373;
+}
+
+.time-separator {
+    color: #737373;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.note-textarea {
+    width: calc(100% - 540px);
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #737373;
+    border: 1px solid #d0d0d0;
+    border-radius: 6px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.note-textarea:focus {
+    outline: none;
+    border-color: #737373;
+}
+
+.form-actions {
+    margin-top: 50px;
+    text-align: right;
+}
+
+.submit-button {
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px 40px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.submit-button:hover {
+    opacity: 0.8;
+}
+
+/* 承認待ちの場合の表示スタイル */
+.time-display-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 110px;
+}
+
+.time-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000;
+}
+
+.note-display {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000;
+    min-height: 24px;
+    text-align: center;
+}
+
+.pending-message {
+    color: #ff0000;
+    font-size: 18px;
+    font-weight: normal;
+    margin: 0;
+    text-align: right;
+}

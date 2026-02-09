@@ -1,0 +1,96 @@
+/* 勤怠打刻ページのスタイル */
+body {
+    background-color: #f0eff2;
+    color: #000000;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 50px);
+}
+
+.attendance-container {
+    width: 70%;
+    max-width: 700px;
+    padding: 60px 40px;
+    text-align: center;
+}
+
+.attendance__status {
+    margin-bottom: 30px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #c8c8c8;
+    color: #696969;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 50px;
+}
+
+.attendance__datetime {
+    margin-bottom: 90px;
+}
+
+.datetime__date {
+    font-size: 38px;
+    font-weight: normal;
+    margin-bottom: 40px;
+}
+
+.datetime__time {
+    font-size: 70px;
+    font-weight: bold;
+}
+
+.attendance__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.button-group {
+    display: flex;
+    gap: 70px;
+    justify-content: center;
+}
+
+.btn-attendance {
+    width: 200px;
+    padding: 15px 30px;
+    font-size: 28px;
+    font-weight: bold;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.btn-attendance--primary {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.btn-attendance--primary:hover {
+    background-color: #333333;
+}
+
+.btn-attendance--secondary {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.btn-attendance--secondary:hover {
+    background-color: #d4d3d3;
+}
+
+.completion-message {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 20px;
+}

@@ -1,0 +1,21 @@
+/* CSV出力ボタン用スタイル */
+.csv-export-section {
+    margin-top: 50px;
+    text-align: right;
+}
+
+.csv-export-button {
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px 40px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.csv-export-button:hover {
+    opacity: 0.8;
+}

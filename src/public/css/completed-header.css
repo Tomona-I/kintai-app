@@ -1,0 +1,7 @@
+.nav-link {
+    font-weight: normal;
+}
+
+.nav-link--logout {
+    font-weight: bold;
+}
