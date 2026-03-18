@@ -94,3 +94,43 @@ main {
     font-weight: bold;
     padding: 20px;
 }
+
+@media (min-width: 768px) and (max-width: 850px) {
+    .attendance-container {
+        width: 85%;
+        padding: 40px 20px;
+    }
+
+    .status-badge {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .datetime__date {
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+
+    .datetime__time {
+        font-size: 50px;
+    }
+
+    .attendance__datetime {
+        margin-bottom: 60px;
+    }
+
+    .button-group {
+        gap: 40px;
+    }
+
+    .btn-attendance {
+        width: 160px;
+        padding: 12px 24px;
+        font-size: 22px;
+    }
+
+    .completion-message {
+        font-size: 18px;
+        padding: 15px;
+    }
+}

@@ -18,9 +18,9 @@ class CreateAttendancesTable extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->date('date');
             $table->time('clock_in')->nullable();
-            $table->time('break_start')->nullable();
-            $table->time('break_end')->nullable();
             $table->time('clock_out')->nullable();
+            $table->text('notes')->nullable();
+            $table->tinyInteger('status')->default(0)->comment('0:通常, 1:承認待ち, 2:承認済み');
             $table->timestamps();
             
             // 1人1日1レコードの制約

@@ -14,21 +14,23 @@
     <h1 class="attendance-detail__title">勤怠詳細</h1>
     
     @if($isEditable)
-    <form action="#" method="POST" class="detail-form">
+    <form action="{{ route('admin.attendance.update', ['id' => $attendance->id]) }}" method="POST" class="detail-form">
         @csrf
+        <input type="hidden" name="attendance_id" value="{{ $attendance->id }}">
+        @method('POST')
     @endif
     
         <table class="detail-table">
             <tr>
                 <th>名前</th>
-                <td class="name-cell">山田 太郎</td>
+                <td class="name-cell">{{ $attendance->user->name }}</td>
             </tr>
             <tr>
                 <th>日付</th>
                 <td>
                     <div class="date-display">
-                        <span>2026年</span>
-                        <span>2月5日</span>
+                        <span>{{ $attendance->date->format('Y年') }}</span>
+                        <span>{{ $attendance->date->format('n月j日') }}</span>
                     </div>
                 </td>
             </tr>
@@ -37,34 +39,52 @@
                 <td>
                     @if($isEditable)
                     <div class="time-input-group">
-                        <input type="time" name="start_time" value="09:00" class="time-input">
+                        <input type="time" name="clock_in" value="{{ old('clock_in', $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '') }}" class="time-input">
                         <span class="time-separator">～</span>
-                        <input type="time" name="end_time" value="18:00" class="time-input">
+                        <input type="time" name="clock_out" value="{{ old('clock_out', $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '') }}" class="time-input">
                     </div>
+                        @error('clock_in')
+                        <p class="error-text">{{ $message }}</p>
+                        @enderror
+                        @error('clock_out')
+                        <p class="error-text">{{ $message }}</p>
+                        @enderror
                     @else
                     <div class="time-display-group">
-                        <span class="time-text">09:00</span>
+                        <span class="time-text">{{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '' }}</span>
                         <span class="time-separator">～</span>
-                        <span class="time-text">18:00</span>
+                        <span class="time-text">{{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '' }}</span>
                     </div>
                     @endif
                 </td>
             </tr>
+            @php
+                $break1 = $attendance->breaks->get(0);
+                $break2 = $attendance->breaks->get(1);
+            @endphp
             <tr>
                 <th>休憩</th>
                 <td>
                     @if($isEditable)
-                    <div class="time-input-group">
-                        <input type="time" name="break1_start" value="12:00" class="time-input">
-                        <span class="time-separator">～</span>
-                        <input type="time" name="break1_end" value="13:00" class="time-input">
-                    </div>
+                        <div class="time-input-group">
+                            <input type="time" name="breaks[0][start]" value="{{ old('breaks.0.start', $break1 && $break1->start ? \Carbon\Carbon::parse($break1->start)->format('H:i') : '') }}" class="time-input @error('breaks.0.start') error @enderror">
+                            <span class="time-separator">～</span>
+                            <input type="time" name="breaks[0][end]" value="{{ old('breaks.0.end', $break1 && $break1->end ? \Carbon\Carbon::parse($break1->end)->format('H:i') : '') }}" class="time-input @error('breaks.0.end') error @enderror">
+                        </div>
+                        @error('breaks.0.start')
+                            <p class="error-text">{{ $message }}</p>
+                        @enderror
+                        @error('breaks.0.end')
+                            <p class="error-text">{{ $message }}</p>
+                        @enderror
                     @else
-                    <div class="time-display-group">
-                        <span class="time-text">12:00</span>
-                        <span class="time-separator">～</span>
-                        <span class="time-text">13:00</span>
-                    </div>
+                        @if($break1 && $break1->start && $break1->end)
+                            <div class="time-display-group">
+                                <span class="time-text">{{ \Carbon\Carbon::parse($break1->start)->format('H:i') }}</span>
+                                <span class="time-separator">～</span>
+                                <span class="time-text">{{ \Carbon\Carbon::parse($break1->end)->format('H:i') }}</span>
+                            </div>
+                        @endif
                     @endif
                 </td>
             </tr>
@@ -72,17 +92,25 @@
                 <th>休憩2</th>
                 <td>
                     @if($isEditable)
-                    <div class="time-input-group">
-                        <input type="time" name="break2_start" value="15:00" class="time-input">
-                        <span class="time-separator">～</span>
-                        <input type="time" name="break2_end" value="15:15" class="time-input">
-                    </div>
+                        <div class="time-input-group">
+                            <input type="time" name="breaks[1][start]" value="{{ old('breaks.1.start', $break2 && $break2->start ? \Carbon\Carbon::parse($break2->start)->format('H:i') : '') }}" class="time-input @error('breaks.1.start') error @enderror">
+                            <span class="time-separator">～</span>
+                            <input type="time" name="breaks[1][end]" value="{{ old('breaks.1.end', $break2 && $break2->end ? \Carbon\Carbon::parse($break2->end)->format('H:i') : '') }}" class="time-input @error('breaks.1.end') error @enderror">
+                        </div>
+                        @error('breaks.1.start')
+                            <p class="error-text">{{ $message }}</p>
+                        @enderror
+                        @error('breaks.1.end')
+                            <p class="error-text">{{ $message }}</p>
+                        @enderror
                     @else
-                    <div class="time-display-group">
-                        <span class="time-text">15:00</span>
-                        <span class="time-separator">～</span>
-                        <span class="time-text">15:15</span>
-                    </div>
+                        @if($break2 && $break2->start && $break2->end)
+                            <div class="time-display-group">
+                                <span class="time-text">{{ \Carbon\Carbon::parse($break2->start)->format('H:i') }}</span>
+                                <span class="time-separator">～</span>
+                                <span class="time-text">{{ \Carbon\Carbon::parse($break2->end)->format('H:i') }}</span>
+                            </div>
+                        @endif
                     @endif
                 </td>
             </tr>
@@ -90,22 +118,21 @@
                 <th>備考</th>
                 <td>
                     @if($isEditable)
-                    <textarea name="note" class="note-textarea" rows="4"></textarea>
+                    <textarea name="notes" class="note-textarea" rows="4">{{ old('notes', $attendance->notes) }}</textarea>
+                        @error('notes')
+                        <p class="error-text">{{ $message }}</p>
+                        @enderror
                     @else
-                    <div class="note-display"></div>
+                    <div class="note-display">{{ $attendance->notes }}</div>
                     @endif
                 </td>
             </tr>
         </table>
-        
         <div class="form-actions">
             @if($isEditable)
             <button type="submit" class="submit-button">修正</button>
-            @else
-            <p class="pending-message">*承認待ちのため修正はできません。</p>
             @endif
         </div>
-    
     @if($isEditable)
     </form>
     @endif

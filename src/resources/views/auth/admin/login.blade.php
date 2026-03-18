@@ -9,7 +9,7 @@
     <div class="login-container">
         <h1>管理者ログイン</h1>
 
-        <form method="POST" action="{{ url('admin/login') }}" novalidate>
+        <form method="POST" action="{{ url('login') }}" novalidate>
             @csrf
             
             <div class="form-group">

@@ -14,7 +14,12 @@ class LogoutResponse implements LogoutResponseContract
      */
     public function toResponse($request)
     {
-        // ログアウト後はログイン画面へ
+        // 管理者ログアウトの場合は管理者ログイン画面へ
+        if ($request->input('is_admin')) {
+            return redirect('/admin/login');
+        }
+
+        // 一般ユーザーはログイン画面へ
         return redirect('/login');
     }
 }

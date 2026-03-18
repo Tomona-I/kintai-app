@@ -14,7 +14,14 @@ class LoginResponse implements LoginResponseContract
      */
     public function toResponse($request)
     {
-        // 一般ユーザーのログイン後は勤怠打刻画面へ
+        $user = auth()->user();
+
+        // 管理者（role=1）は勤怠一覧画面へ
+        if ($user->role === 1) {
+            return redirect('/admin/attendance/list');
+        }
+
+        // 一般ユーザー（role=0）は打刻画面へ
         return redirect('/attendance');
     }
 }

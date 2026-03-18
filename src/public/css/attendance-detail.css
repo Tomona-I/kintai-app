@@ -44,7 +44,7 @@ body {
 }
 
 .detail-table th {
-    padding: 20px;
+    padding: 40px;
     text-align: center;
     font-weight: bold;
     color: #737373;
@@ -54,7 +54,7 @@ body {
 }
 
 .detail-table td {
-    padding: 20px;
+    padding: 40px;
     text-align: center;
     color: #000000;
     font-size: 18px;
@@ -113,11 +113,11 @@ body {
 }
 
 .note-textarea {
-    width: calc(100% - 540px);
+    width: calc(100% - 500px);
     padding: 12px;
     font-size: 18px;
     font-weight: bold;
-    color: #737373;
+    color: #000;
     border: 1px solid #d0d0d0;
     border-radius: 6px;
     resize: vertical;
@@ -150,6 +150,12 @@ body {
     opacity: 0.8;
 }
 
+.error-text {
+    color:#ff0000;
+    font-size: 16px;
+    margin: 7px 0 5px 0;
+}
+
 /* 承認待ちの場合の表示スタイル */
 .time-display-group {
     display: flex;
@@ -178,4 +184,80 @@ body {
     font-weight: normal;
     margin: 0;
     text-align: right;
+}
+
+/* タブレット対応 (768-850px) */
+@media (min-width: 768px) and (max-width: 850px) {
+    .attendance-detail {
+        padding: 30px 15px;
+    }
+
+    .attendance-detail__title {
+        font-size: 24px;
+        margin-bottom: 30px;
+        padding-left: 15px;
+    }
+
+    .attendance-detail__title::before {
+        width: 6px;
+    }
+
+    .detail-table th,
+    .detail-table td {
+        padding: 12px 8px;
+        font-size: 14px;
+    }
+
+    .date-display {
+        gap: 100px;
+    }
+
+    .time-input-group {
+        gap: 40px;
+    }
+
+    .time-input {
+        padding: 6px 20px;
+        font-size: 14px;
+    }
+
+    .time-separator {
+        font-size: 14px;
+    }
+
+    .time-display-group {
+        gap: 60px;
+    }
+
+    .time-text {
+        font-size: 14px;
+    }
+
+    .note-textarea {
+        width: calc(100% - 330px);
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .note-display {
+        font-size: 14px;
+    }
+
+    .form-actions {
+        margin-top: 30px;
+    }
+
+    .submit-button {
+        font-size: 16px;
+        padding: 10px 30px;
+    }
+
+    .pending-message {
+        font-size: 16px;
+    }
+
+    .error-text {
+        font-size: 12px;
+        margin: 5px 0 3px 0;
+    }
 }

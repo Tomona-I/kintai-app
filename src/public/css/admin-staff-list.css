@@ -81,3 +81,25 @@ body {
 .detail-link:hover {
     text-decoration: underline;
 }
+
+@media (min-width: 768px) and (max-width: 850px) {
+    .staff-list {
+        padding: 30px 15px;
+    }
+
+    .staff-list__title {
+        font-size: 24px;
+        margin-bottom: 40px;
+        padding-left: 15px;
+    }
+
+    .staff-list__title::before {
+        width: 6px;
+    }
+
+    .staff-table th,
+    .staff-table td {
+        padding: 12px 8px;
+        font-size: 14px;
+    }
+}

@@ -59,6 +59,13 @@ body {
     color: #333;
 }
 
+.calendar-icon {
+    height: 32px;
+    width: auto;
+    vertical-align: middle;
+    margin: 0 8px 8px 0;
+}
+
 .attendance-table {
     width: 100%;
     background-color: #ffffff;
@@ -96,4 +103,40 @@ body {
 
 .detail-link:hover {
     text-decoration: underline;
+}
+
+/* タブレット対応 (768-850px) */
+@media (min-width: 768px) and (max-width: 850px) {
+    .attendance-list {
+        padding: 30px 15px;
+    }
+
+    .attendance-list__title {
+        font-size: 24px;
+        margin-bottom: 30px;
+        padding-left: 15px;
+    }
+
+    .attendance-list__title::before {
+        width: 6px;
+    }
+
+    .month-navigation {
+        margin-bottom: 40px;
+        padding: 15px;
+    }
+
+    .month-navigation__link {
+        font-size: 16px;
+    }
+
+    .month-navigation__current {
+        font-size: 20px;
+    }
+
+    .attendance-table th,
+    .attendance-table td {
+        padding: 12px 8px;
+        font-size: 14px;
+    }
 }

@@ -92,3 +92,33 @@ body {
 .detail-link:hover {
     text-decoration: underline;
 }
+
+/* タブレット（768px～850px）用レスポンシブ */
+@media (min-width: 768px) and (max-width: 850px) {
+    .application-list {
+        max-width: 100vw;
+        padding: 24px 8px;
+    }
+    .application-list__title {
+        font-size: 24px;
+        margin-bottom: 32px;
+        padding-left: 12px;
+    }
+    .tab-navigation {
+        gap: 12px;
+        margin-bottom: 32px;
+        padding-bottom: 6px;
+    }
+    .tab-button {
+        font-size: 15px;
+        margin-left: 24px;
+    }
+    .application-table {
+        border-radius: 6px;
+    }
+    .application-table th,
+    .application-table td {
+        padding: 10px;
+        font-size: 14px;
+    }
+}

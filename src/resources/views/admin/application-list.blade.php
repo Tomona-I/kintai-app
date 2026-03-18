@@ -26,30 +26,20 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>承認待ち</td>
-                <td>山田 太郎</td>
-                <td>2026/02/01</td>
-                <td>遅延のため</td>
-                <td>2026/02/03</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-            <tr>
-                <td>承認待ち</td>
-                <td>佐藤 花子</td>
-                <td>2026/02/02</td>
-                <td>遅延のため</td>
-                <td>2026/02/04</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-            <tr>
-                <td>承認待ち</td>
-                <td>鈴木 一郎</td>
-                <td>2026/02/03</td>
-                <td>遅延のため</td>
-                <td>2026/02/05</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
+            @forelse($pendingAttendances as $attendance)
+                <tr>
+                    <td>承認待ち</td>
+                    <td>{{ $attendance->user->name }}</td>
+                    <td>{{ $attendance->date->format('Y/m/d') }}</td>
+                    <td>{{ $attendance->notes }}</td>
+                    <td>{{ $attendance->updated_at->format('Y/m/d') }}</td>
+                    <td><a href="{{ url('/admin/stamp_correction_request/approve/' . $attendance->id) }}" class="detail-link">詳細</a></td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="6">承認待ちのデータがありません</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 
@@ -66,22 +56,20 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>承認済み</td>
-                <td>田中 次郎</td>
-                <td>2026/01/28</td>
-                <td>遅延のため</td>
-                <td>2026/01/30</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-            <tr>
-                <td>承認済み</td>
-                <td>高橋 美咲</td>
-                <td>2026/01/29</td>
-                <td>遅延のため</td>
-                <td>2026/01/31</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
+            @forelse($approvedAttendances as $attendance)
+                <tr>
+                    <td>承認済み</td>
+                    <td>{{ $attendance->user->name }}</td>
+                    <td>{{ $attendance->date->format('Y/m/d') }}</td>
+                    <td>{{ $attendance->notes }}</td>
+                    <td>{{ $attendance->updated_at->format('Y/m/d') }}</td>
+                    <td><a href="{{ url('/admin/stamp_correction_request/approve/' . $attendance->id) }}" class="detail-link">詳細</a></td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="6">承認済みのデータがありません</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 </div>

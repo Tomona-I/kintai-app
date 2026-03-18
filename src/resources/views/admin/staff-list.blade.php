@@ -17,32 +17,13 @@
             </tr>
         </thead>
         <tbody>
+        @foreach($users as $user)
             <tr>
-                <td class="name-column">山田 太郎</td>
-                <td class="email-column">yamada.taro@example.com</td>
-                <td class="monthly-column"><a href="#" class="detail-link">詳細</a></td>
+                <td class="name-column">{{ $user->name }}</td>
+                <td class="email-column">{{ $user->email }}</td>
+                <td class="monthly-column"><a href="{{ route('admin.staff.attendance', ['id' => $user->id]) }}" class="detail-link">詳細</a></td>
             </tr>
-            <tr>
-                <td class="name-column">佐藤 花子</td>
-                <td class="email-column">sato.hanako@example.com</td>
-                <td class="monthly-column"><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-            <tr>
-                <td class="name-column">鈴木 一郎</td>
-                <td class="email-column">suzuki.ichiro@example.com</td>
-                <td class="monthly-column"><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-            <tr>
-                <td class="name-column">田中 次郎</td>
-                <td class="email-column">tanaka.jiro@example.com</td>
-                <td class="monthly-column"><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-            <tr>
-                <td class="name-column">高橋 美咲</td>
-                <td class="email-column">takahashi.misaki@example.com</td>
-                <td class="monthly-column"><a href="#" class="detail-link">詳細</a></td>
-            </tr>
+        @endforeach
         </tbody>
     </table>
-</div>
 @endsection

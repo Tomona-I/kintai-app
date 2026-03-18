@@ -8,33 +8,64 @@
 @section('content')
     <div class="attendance-container">
         <div class="attendance__status">
-            {{-- 状態: 勤務外、出勤中、休憩中、退勤済 --}}
-            <span class="status-badge">勤務外</span>
-            {{-- <span class="status-badge">出勤中</span> --}}
-            {{-- <span class="status-badge">休憩中</span> --}}
-            {{-- <span class="status-badge">退勤済</span> --}}
+            @if($status === 'before_work')
+                <span class="status-badge">勤務外</span>
+            @elseif($status === 'working')
+                <span class="status-badge">出勤中</span>
+            @elseif($status === 'on_break')
+                <span class="status-badge">休憩中</span>
+            @elseif($status === 'after_work')
+                <span class="status-badge">退勤済</span>
+            @endif
         </div>
 
         <div class="attendance__datetime">
-            <p class="datetime__date">2026年2月1日(土)</p>
-            <p class="datetime__time">09:00</p>
+            <p class="datetime__date">{{ now()->isoFormat('YYYY年M月D日(ddd)') }}</p>
+            <p class="datetime__time" id="current-time">{{ now()->format('H:i') }}</p>
         </div>
 
         <div class="attendance__buttons">
-            {{-- パターン1: 勤務外 --}}
-            <button type="button" class="btn-attendance btn-attendance--primary">出勤</button>
+            @if($status === 'before_work')
+                {{-- パターン1: 勤務外 --}}
+                <form method="POST" action="{{ route('attendance.clock-in') }}">
+                    @csrf
+                    <button type="submit" class="btn-attendance btn-attendance--primary">出勤</button>
+                </form>
 
-            {{-- パターン2: 出勤中 --}}
-            {{-- <div class="button-group">
-                <button type="button" class="btn-attendance btn-attendance--primary">退勤</button>
-                <button type="button" class="btn-attendance btn-attendance--secondary">休憩入</button>
-            </div> --}}
+            @elseif($status === 'working')
+                {{-- パターン2: 出勤中 --}}
+                <div class="button-group">
+                    <form method="POST" action="{{ route('attendance.clock-out') }}">
+                        @csrf
+                        <button type="submit" class="btn-attendance btn-attendance--primary">退勤</button>
+                    </form>
+                    <form method="POST" action="{{ route('attendance.break-start') }}">
+                        @csrf
+                        <button type="submit" class="btn-attendance btn-attendance--secondary">休憩入</button>
+                    </form>
+                </div>
 
-            {{-- パターン3: 休憩中 --}}
-            {{-- <button type="button" class="btn-attendance btn-attendance--secondary">休憩戻</button> --}}
+            @elseif($status === 'on_break')
+                {{-- パターン3: 休憩中 --}}
+                <form method="POST" action="{{ route('attendance.break-end') }}">
+                    @csrf
+                    <button type="submit" class="btn-attendance btn-attendance--secondary">休憩戻</button>
+                </form>
 
-            {{-- パターン4: 退勤済 --}}
-            {{-- <p class="completion-message">お疲れ様でした。</p> --}}
+            @elseif($status === 'after_work')
+                {{-- パターン4: 退勤済 --}}
+                <p class="completion-message">お疲れ様でした。</p>
+            @endif
         </div>
     </div>
+
+    <script>
+        // 現在時刻を1秒ごとに更新
+        setInterval(function() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('current-time').textContent = hours + ':' + minutes;
+        }, 1000);
+    </script>
 @endsection

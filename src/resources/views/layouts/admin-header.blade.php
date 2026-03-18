@@ -15,9 +15,10 @@
         <nav class="header__nav">
             <a href="{{ url('/admin/attendance/list') }}" class="nav-link">勤怠一覧</a>
             <a href="{{ url('/admin/staff/list') }}" class="nav-link">スタッフ一覧</a>
-            <a href="{{ url('/stamp_correction_request/list') }}" class="nav-link">申請一覧</a>
+            <a href="{{ url('/admin/application-list') }}" class="nav-link">申請一覧</a>
             <form method="POST" action="{{ route('logout') }}" class="logout-form">
                 @csrf
+                <input type="hidden" name="is_admin" value="1">
                 <button type="submit" class="nav-link nav-link--logout">ログアウト</button>
             </form>
         </nav>

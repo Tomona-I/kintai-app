@@ -25,3 +25,17 @@
 .approval-button--approved:hover {
     opacity: 1;
 }
+
+/* タブレット（768px～850px）用レスポンシブ */
+@media (min-width: 768px) and (max-width: 850px) {
+    .approval-button {
+        font-size: 15px;
+        padding: 10px 24px;
+        border-radius: 6px;
+    }
+    .approval-button--approved {
+        font-size: 15px;
+        padding: 10px 24px;
+        border-radius: 6px;
+    }
+}

@@ -15,7 +15,7 @@
         <nav class="header__nav">
             <a href="{{ url('/attendance') }}" class="nav-link">勤怠</a>
             <a href="{{ url('/attendance/list') }}" class="nav-link">勤怠一覧</a>
-            <a href="{{ url('/application') }}" class="nav-link">申請</a>
+            <a href="{{ url('/stamp_correction_request/list') }}" class="nav-link">申請</a>
             <form method="POST" action="{{ route('logout') }}" class="logout-form">
                 @csrf
                 <button type="submit" class="nav-link nav-link--logout">ログアウト</button>

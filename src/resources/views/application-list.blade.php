@@ -7,7 +7,6 @@
 @section('content')
 <div class="application-list">
     <h1 class="application-list__title">申請一覧</h1>
-    
     <div class="tab-navigation">
         <button class="tab-button tab-button--active" data-tab="pending">承認待ち</button>
         <button class="tab-button" data-tab="approved">承認済み</button>
@@ -26,30 +25,20 @@
             </tr>
         </thead>
         <tbody>
+            @forelse($pendingAttendances as $attendance)
             <tr>
                 <td>承認待ち</td>
-                <td>山田 太郎</td>
-                <td>2026/02/01</td>
-                <td>遅延のため</td>
-                <td>2026/02/03</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
+                <td>{{ $attendance->user->name }}</td>
+                <td>{{ $attendance->date->format('Y/m/d') }}</td>
+                <td>{{ $attendance->notes ?? '' }}</td>
+                <td>{{ $attendance->updated_at->format('Y/m/d') }}</td>
+                <td><a href="{{ route('attendance.detail', ['id' => $attendance->id]) }}" class="detail-link">詳細</a></td>
             </tr>
+            @empty
             <tr>
-                <td>承認待ち</td>
-                <td>佐藤 花子</td>
-                <td>2026/02/02</td>
-                <td>遅延のため</td>
-                <td>2026/02/04</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
+                <td colspan="6">承認待ちのデータがありません</td>
             </tr>
-            <tr>
-                <td>承認待ち</td>
-                <td>鈴木 一郎</td>
-                <td>2026/02/03</td>
-                <td>遅延のため</td>
-                <td>2026/02/05</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
+            @endforelse
         </tbody>
     </table>
 
@@ -66,22 +55,20 @@
             </tr>
         </thead>
         <tbody>
+            @forelse($approvedAttendances as $attendance)
             <tr>
                 <td>承認済み</td>
-                <td>田中 次郎</td>
-                <td>2026/01/28</td>
-                <td>遅延のため</td>
-                <td>2026/01/30</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
+                <td>{{ $attendance->user->name }}</td>
+                <td>{{ $attendance->date->format('Y/m/d') }}</td>
+                <td>{{ $attendance->notes ?? '' }}</td>
+                <td>{{ $attendance->updated_at->format('Y/m/d') }}</td>
+                <td><a href="{{ route('attendance.detail', ['id' => $attendance->id]) }}" class="detail-link">詳細</a></td>
             </tr>
+            @empty
             <tr>
-                <td>承認済み</td>
-                <td>高橋 美咲</td>
-                <td>2026/01/29</td>
-                <td>遅延のため</td>
-                <td>2026/01/31</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
+                <td colspan="6">承認済みのデータがありません</td>
             </tr>
+            @endforelse
         </tbody>
     </table>
 </div>
@@ -94,18 +81,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {
-            // すべてのタブからactiveクラスを削除
             tabButtons.forEach(btn => btn.classList.remove('tab-button--active'));
-            
-            // クリックされたタブにactiveクラスを追加
             this.classList.add('tab-button--active');
-            
-            // 表示を切り替え
-            const tab = this.getAttribute('data-tab');
-            if (tab === 'pending') {
+            const tabName = this.getAttribute('data-tab');
+            if (tabName === 'pending') {
                 pendingTable.style.display = 'table';
                 approvedTable.style.display = 'none';
-            } else if (tab === 'approved') {
+            } else if (tabName === 'approved') {
                 pendingTable.style.display = 'none';
                 approvedTable.style.display = 'table';
             }

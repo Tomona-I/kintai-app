@@ -39,7 +39,7 @@ class FortifyServiceProvider extends ServiceProvider
         // カスタムログインリクエストを登録
         $this->app->bind(
             \Laravel\Fortify\Http\Requests\LoginRequest::class,
-            \App\Http\Requests\LoginRequest::class
+            LoginRequest::class
         );
     }
 
@@ -60,18 +60,27 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.register');
         });
 
-        // 一般ユーザー（role=0）のみログイン許可
+        // メール認証画面の指定
+        Fortify::verifyEmailView(function () {
+            return view('auth.verify');
+        });
+
+        // 一般ユーザー（role=0）・管理者（role=1）両方ログイン許可
         Fortify::authenticateUsing(function (Request $request) {
             $user = \App\Models\User::where('email', $request->email)->first();
 
-            if ($user && \Hash::check($request->password, $user->password) && $user->role === 0) {
-                return $user;
+            if ($user) {
+                // パスワードチェック
+                if (\Hash::check($request->password, $user->password)) {
+                    return $user;
+                }
+
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'password' => ['ログイン情報が登録されていません'],
+                ]);
             }
-            
-            // パスワードが間違っている、またはroleが違う場合
-            throw \Illuminate\Validation\ValidationException::withMessages([
-                'email' => ['ログイン情報が登録されていません'],
-            ]);
+
+            return null;
         });
 
         RateLimiter::for('login', function (Request $request) {

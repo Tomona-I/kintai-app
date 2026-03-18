@@ -6,12 +6,12 @@
 
 @section('content')
 <div class="attendance-list">
-    <h1 class="attendance-list__title">2026年2月6日の勤怠</h1>
+    <h1 class="attendance-list__title">{{ $year }}年{{ $month }}月{{ $day }}日の勤怠一覧</h1>
     
     <div class="date-navigation">
-        <a href="#" class="date-navigation__link date-navigation__link--prev">←前日</a>
-        <span class="date-navigation__current">2026/2/6</span>
-        <a href="#" class="date-navigation__link date-navigation__link--next">翌日→</a>
+        <a href="{{ route('admin.attendance.list', ['year' => $prevYear, 'month' => $prevMonth, 'day' => $prevDay]) }}" class="date-navigation__link date-navigation__link--prev">←前日</a>
+        <span class="date-navigation__current"><img src="{{ asset('img/caledar_logo.png') }}" alt="calendar" class="calendar-icon">{{ $year }}/{{ sprintf('%02d', $month) }}/{{ sprintf('%02d', $day) }}</span>
+        <a href="{{ route('admin.attendance.list', ['year' => $nextYear, 'month' => $nextMonth, 'day' => $nextDay]) }}" class="date-navigation__link date-navigation__link--next">翌日→</a>
     </div>
 
     <table class="attendance-table">
@@ -26,46 +26,42 @@
             </tr>
         </thead>
         <tbody>
+            @foreach($attendances as $attendance)
             <tr>
-                <td class="name-column">山田 太郎</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
+                <td class="name-column">{{ $attendance->user->name }}</td>
+                <td>{{ $attendance->date ? \Carbon\Carbon::parse($attendance->date)->format('Y/m/d') : '' }}</td>
+                <td>{{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '' }}</td>
+                <td>{{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '' }}</td>
+                <td>
+                    @php
+                        $breaks = $attendance->breaks->whereNotNull('end');
+                        $totalBreakSeconds = $breaks->reduce(function($carry, $break) {
+                            if ($break->start && $break->end) {
+                                $start = strtotime($break->start);
+                                $end = strtotime($break->end);
+                                return $carry + ($end - $start);
+                            }
+                            return $carry;
+                        }, 0);
+                        $hours = floor($totalBreakSeconds / 3600);
+                        $minutes = floor(($totalBreakSeconds % 3600) / 60);
+                    @endphp
+                    {{ sprintf('%d:%02d', $hours, $minutes) }}
+                </td>
+                <td>
+                    @php
+                        $workSeconds = 0;
+                        if ($attendance->clock_in && $attendance->clock_out) {
+                            $workSeconds = strtotime($attendance->clock_out) - strtotime($attendance->clock_in) - $totalBreakSeconds;
+                        }
+                        $workHours = floor($workSeconds / 3600);
+                        $workMinutes = floor(($workSeconds % 3600) / 60);
+                    @endphp
+                    {{ sprintf('%d:%02d', $workHours, $workMinutes) }}
+                </td>
+                <td><a href="{{ route('admin.attendance.detail', ['id' => $attendance->id]) }}" class="detail-link">詳細</a></td>
             </tr>
-            <tr>
-                <td class="name-column">佐藤 花子</td>
-                <td>08:30</td>
-                <td>17:30</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-            <tr>
-                <td class="name-column">鈴木 一郎</td>
-                <td>09:15</td>
-                <td>18:45</td>
-                <td>1:30</td>
-                <td>8:00</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-            <tr>
-                <td class="name-column">田中 次郎</td>
-                <td>09:00</td>
-                <td>18:00</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
-            <tr>
-                <td class="name-column">高橋 美咲</td>
-                <td>08:45</td>
-                <td>17:45</td>
-                <td>1:00</td>
-                <td>8:00</td>
-                <td><a href="#" class="detail-link">詳細</a></td>
-            </tr>
+            @endforeach
         </tbody>
     </table>
 </div>
