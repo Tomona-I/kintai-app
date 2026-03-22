@@ -12,7 +12,6 @@
         <button class="tab-button" data-tab="approved">承認済み</button>
     </div>
 
-    <!-- 承認待ちの表 -->
     <table class="application-table" id="pending-table">
         <thead>
             <tr>
@@ -42,7 +41,6 @@
         </tbody>
     </table>
 
-    <!-- 承認済みの表 -->
     <table class="application-table" id="approved-table" style="display: none;">
         <thead>
             <tr>

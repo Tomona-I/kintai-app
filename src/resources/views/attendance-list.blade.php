@@ -10,7 +10,7 @@
     
     <div class="month-navigation">
         <a href="{{ route('attendance.list', ['year' => $prevMonth->year, 'month' => $prevMonth->month]) }}" class="month-navigation__link month-navigation__link--prev">←前月</a>
-        <span class="month-navigation__current"><img src="{{ asset('img/caledar_logo.png') }}" alt="calendar" class="calendar-icon">{{ $year }}/{{ $month }}</span>
+        <span class="month-navigation__current"><img src="{{ asset('img/calendar_logo.png') }}" alt="calendar" class="calendar-icon">{{ $year }}/{{ str_pad($month, 2, '0', STR_PAD_LEFT) }}</span>
         <a href="{{ route('attendance.list', ['year' => $nextMonth->year, 'month' => $nextMonth->month]) }}" class="month-navigation__link month-navigation__link--next">翌月→</a>
     </div>
 

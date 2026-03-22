@@ -63,9 +63,10 @@ class AdminAttendanceController extends Controller
                 ]
             );
         } else {
-            $attendance = \App\Models\Attendance::with(['user', 'breaks'])->findOrFail($id);
+            $attendance = Attendance::with(['user', 'breaks'])->findOrFail($id);
         }
-        return view('admin.attendance-detail', compact('attendance'));
+        $isEditable = true;
+        return view('admin.attendance-detail', compact('attendance', 'isEditable'));
     }
 
     /**
@@ -74,7 +75,7 @@ class AdminAttendanceController extends Controller
     public function update(UpdateAttendanceRequest $request, $id)
     {
         $validated = $request->validated();
-        $attendance = \App\Models\Attendance::with(['user', 'breaks'])->findOrFail($id);
+        $attendance = Attendance::with(['user', 'breaks'])->findOrFail($id);
         $date = $attendance->date->format('Y-m-d');
         // 出勤・退勤・備考を更新
         $attendance->clock_in = $date . ' ' . $validated['clock_in'];

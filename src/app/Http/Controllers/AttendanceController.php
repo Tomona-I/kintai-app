@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\AttendanceRequest;
 use App\Http\Requests\UpdateAttendanceRequest;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\Auth;
@@ -146,11 +145,7 @@ class AttendanceController extends Controller
                 }
                 return $carry;
             }, 0);
-            // 勤務時間を計算
-            $clockInSeconds = strtotime($attendance->clock_in);
-            $clockOutSeconds = strtotime($now);
-            $totalWorkSeconds = ($clockOutSeconds - $clockInSeconds) - $totalBreakSeconds;
-            
+
             $attendance->clock_out = $now;
             $attendance->save();
         }
@@ -283,7 +278,6 @@ class AttendanceController extends Controller
             }
         }
 
-        // 合計時間計算・保存処理を削除
         $attendance->save();
         
         return redirect()->route('attendance.detail', ['id' => $attendance->id]);
@@ -300,14 +294,14 @@ class AttendanceController extends Controller
         $pendingAttendances = Attendance::where('user_id', $user->id)
             ->where('status', 1)
             ->with(['user', 'breaks'])
-            ->orderBy('date', 'desc')
+            ->orderBy('date')
             ->get();
         
         // 承認済み（status=2）のデータを取得
         $approvedAttendances = Attendance::where('user_id', $user->id)
             ->where('status', 2)
             ->with(['user', 'breaks'])
-            ->orderBy('date', 'desc')
+            ->orderBy('date')
             ->get();
         
         return view('application-list', compact('pendingAttendances', 'approvedAttendances'));

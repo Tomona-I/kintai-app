@@ -14,7 +14,7 @@
 ### Laravel環境構築
 - docker-compose exec php bash
 - composer install
-- cp .env.example .env （環境変数を変更）
+- cp .env.example .env
 - php artisan key:generate
 - php artisan migrate
 - php artisan db:seed
@@ -29,6 +29,8 @@
 `php artisan db:seed` で管理者・一般ユーザーの両方が作成されます。
 
 ### 管理者
+
+管理者専用のログインページ（ http://localhost/admin/login ）にアクセスしてログインしてください。
 
 | 項目 | 値 |
 |---|---|

@@ -11,7 +11,7 @@
     
     <div class="month-navigation">
         <a href="{{ route('admin.staff.attendance', ['id' => $user->id, 'year' => $prevYear, 'month' => $prevMonth]) }}" class="month-navigation__link month-navigation__link--prev">←前月</a>
-        <span class="month-navigation__current"><img src="{{ asset('img/caledar_logo.png') }}" alt="calendar" class="calendar-icon">{{ $year }}/{{ sprintf('%02d', $month) }}</span>
+        <span class="month-navigation__current"><img src="{{ asset('img/calendar_logo.png') }}" alt="calendar" class="calendar-icon">{{ $year }}/{{ sprintf('%02d', $month) }}</span>
         <a href="{{ route('admin.staff.attendance', ['id' => $user->id, 'year' => $nextYear, 'month' => $nextMonth]) }}" class="month-navigation__link month-navigation__link--next">翌月→</a>
     </div>
 

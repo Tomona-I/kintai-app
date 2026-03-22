@@ -10,7 +10,7 @@
     
     <div class="date-navigation">
         <a href="{{ route('admin.attendance.list', ['year' => $prevYear, 'month' => $prevMonth, 'day' => $prevDay]) }}" class="date-navigation__link date-navigation__link--prev">←前日</a>
-        <span class="date-navigation__current"><img src="{{ asset('img/caledar_logo.png') }}" alt="calendar" class="calendar-icon">{{ $year }}/{{ sprintf('%02d', $month) }}/{{ sprintf('%02d', $day) }}</span>
+        <span class="date-navigation__current"><img src="{{ asset('img/calendar_logo.png') }}" alt="calendar" class="calendar-icon">{{ $year }}/{{ sprintf('%02d', $month) }}/{{ sprintf('%02d', $day) }}</span>
         <a href="{{ route('admin.attendance.list', ['year' => $nextYear, 'month' => $nextMonth, 'day' => $nextDay]) }}" class="date-navigation__link date-navigation__link--next">翌日→</a>
     </div>
 
@@ -29,7 +29,6 @@
             @foreach($attendances as $attendance)
             <tr>
                 <td class="name-column">{{ $attendance->user->name }}</td>
-                <td>{{ $attendance->date ? \Carbon\Carbon::parse($attendance->date)->format('Y/m/d') : '' }}</td>
                 <td>{{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '' }}</td>
                 <td>{{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '' }}</td>
                 <td>

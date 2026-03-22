@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Attendance;
 
 class AdminApprovalController extends Controller
@@ -11,7 +10,8 @@ class AdminApprovalController extends Controller
     public function show($attendanceId)
     {
         $attendance = Attendance::with('user', 'breaks')->findOrFail($attendanceId);
-        return view('admin.approval', compact('attendance'));
+        $isApproved = $attendance->status == 2;
+        return view('admin.approval', compact('attendance', 'isApproved'));
     }
 
     public function approve($attendanceId)

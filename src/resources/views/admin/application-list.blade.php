@@ -13,7 +13,6 @@
         <button class="tab-button" data-tab="approved">承認済み</button>
     </div>
 
-    <!-- 承認待ちの表 -->
     <table class="application-table" id="pending-table">
         <thead>
             <tr>
@@ -43,7 +42,6 @@
         </tbody>
     </table>
 
-    <!-- 承認済みの表 -->
     <table class="application-table" id="approved-table" style="display: none;">
         <thead>
             <tr>
@@ -82,13 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {
-            // すべてのタブからactiveクラスを削除
             tabButtons.forEach(btn => btn.classList.remove('tab-button--active'));
-            
-            // クリックされたタブにactiveクラスを追加
             this.classList.add('tab-button--active');
-            
-            // 表示を切り替え
             const tab = this.getAttribute('data-tab');
             if (tab === 'pending') {
                 pendingTable.style.display = 'table';

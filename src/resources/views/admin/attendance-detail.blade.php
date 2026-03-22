@@ -5,11 +5,6 @@
 @endsection
 
 @section('content')
-{{-- 仮の変数設定（後でコントローラーから渡す） --}}
-@php
-    $isEditable = true; // 管理者は常に修正可能
-@endphp
-
 <div class="attendance-detail">
     <h1 class="attendance-detail__title">勤怠詳細</h1>
     
@@ -17,7 +12,6 @@
     <form action="{{ route('admin.attendance.update', ['id' => $attendance->id]) }}" method="POST" class="detail-form">
         @csrf
         <input type="hidden" name="attendance_id" value="{{ $attendance->id }}">
-        @method('POST')
     @endif
     
         <table class="detail-table">
@@ -58,62 +52,53 @@
                     @endif
                 </td>
             </tr>
-            @php
-                $break1 = $attendance->breaks->get(0);
-                $break2 = $attendance->breaks->get(1);
-            @endphp
+            @foreach($attendance->breaks as $i => $break)
             <tr>
-                <th>休憩</th>
+                <th>{{ $i === 0 ? '休憩' : '休憩' . ($i + 1) }}</th>
                 <td>
                     @if($isEditable)
                         <div class="time-input-group">
-                            <input type="time" name="breaks[0][start]" value="{{ old('breaks.0.start', $break1 && $break1->start ? \Carbon\Carbon::parse($break1->start)->format('H:i') : '') }}" class="time-input @error('breaks.0.start') error @enderror">
+                            <input type="time" name="breaks[{{ $i }}][start]" value="{{ old('breaks.' . $i . '.start', $break->start ? \Carbon\Carbon::parse($break->start)->format('H:i') : '') }}" class="time-input @error('breaks.' . $i . '.start') error @enderror">
                             <span class="time-separator">～</span>
-                            <input type="time" name="breaks[0][end]" value="{{ old('breaks.0.end', $break1 && $break1->end ? \Carbon\Carbon::parse($break1->end)->format('H:i') : '') }}" class="time-input @error('breaks.0.end') error @enderror">
+                            <input type="time" name="breaks[{{ $i }}][end]" value="{{ old('breaks.' . $i . '.end', $break->end ? \Carbon\Carbon::parse($break->end)->format('H:i') : '') }}" class="time-input @error('breaks.' . $i . '.end') error @enderror">
                         </div>
-                        @error('breaks.0.start')
+                        @error('breaks.' . $i . '.start')
                             <p class="error-text">{{ $message }}</p>
                         @enderror
-                        @error('breaks.0.end')
+                        @error('breaks.' . $i . '.end')
                             <p class="error-text">{{ $message }}</p>
                         @enderror
                     @else
-                        @if($break1 && $break1->start && $break1->end)
+                        @if($break->start && $break->end)
                             <div class="time-display-group">
-                                <span class="time-text">{{ \Carbon\Carbon::parse($break1->start)->format('H:i') }}</span>
+                                <span class="time-text">{{ \Carbon\Carbon::parse($break->start)->format('H:i') }}</span>
                                 <span class="time-separator">～</span>
-                                <span class="time-text">{{ \Carbon\Carbon::parse($break1->end)->format('H:i') }}</span>
+                                <span class="time-text">{{ \Carbon\Carbon::parse($break->end)->format('H:i') }}</span>
                             </div>
                         @endif
                     @endif
                 </td>
             </tr>
+            @endforeach
+            @if($isEditable)
+            @php $newIndex = $attendance->breaks->count(); @endphp
             <tr>
-                <th>休憩2</th>
+                <th>{{ $newIndex === 0 ? '休憩' : '休憩' . ($newIndex + 1) }}</th>
                 <td>
-                    @if($isEditable)
-                        <div class="time-input-group">
-                            <input type="time" name="breaks[1][start]" value="{{ old('breaks.1.start', $break2 && $break2->start ? \Carbon\Carbon::parse($break2->start)->format('H:i') : '') }}" class="time-input @error('breaks.1.start') error @enderror">
-                            <span class="time-separator">～</span>
-                            <input type="time" name="breaks[1][end]" value="{{ old('breaks.1.end', $break2 && $break2->end ? \Carbon\Carbon::parse($break2->end)->format('H:i') : '') }}" class="time-input @error('breaks.1.end') error @enderror">
-                        </div>
-                        @error('breaks.1.start')
-                            <p class="error-text">{{ $message }}</p>
-                        @enderror
-                        @error('breaks.1.end')
-                            <p class="error-text">{{ $message }}</p>
-                        @enderror
-                    @else
-                        @if($break2 && $break2->start && $break2->end)
-                            <div class="time-display-group">
-                                <span class="time-text">{{ \Carbon\Carbon::parse($break2->start)->format('H:i') }}</span>
-                                <span class="time-separator">～</span>
-                                <span class="time-text">{{ \Carbon\Carbon::parse($break2->end)->format('H:i') }}</span>
-                            </div>
-                        @endif
-                    @endif
+                    <div class="time-input-group">
+                        <input type="time" name="breaks[{{ $newIndex }}][start]" value="{{ old('breaks.' . $newIndex . '.start') }}" class="time-input @error('breaks.' . $newIndex . '.start') error @enderror">
+                        <span class="time-separator">～</span>
+                        <input type="time" name="breaks[{{ $newIndex }}][end]" value="{{ old('breaks.' . $newIndex . '.end') }}" class="time-input @error('breaks.' . $newIndex . '.end') error @enderror">
+                    </div>
+                    @error('breaks.' . $newIndex . '.start')
+                        <p class="error-text">{{ $message }}</p>
+                    @enderror
+                    @error('breaks.' . $newIndex . '.end')
+                        <p class="error-text">{{ $message }}</p>
+                    @enderror
                 </td>
             </tr>
+            @endif
             <tr>
                 <th>備考</th>
                 <td>

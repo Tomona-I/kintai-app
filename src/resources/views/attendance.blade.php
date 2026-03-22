@@ -26,14 +26,12 @@
 
         <div class="attendance__buttons">
             @if($status === 'before_work')
-                {{-- パターン1: 勤務外 --}}
                 <form method="POST" action="{{ route('attendance.clock-in') }}">
                     @csrf
                     <button type="submit" class="btn-attendance btn-attendance--primary">出勤</button>
                 </form>
 
             @elseif($status === 'working')
-                {{-- パターン2: 出勤中 --}}
                 <div class="button-group">
                     <form method="POST" action="{{ route('attendance.clock-out') }}">
                         @csrf
@@ -46,14 +44,12 @@
                 </div>
 
             @elseif($status === 'on_break')
-                {{-- パターン3: 休憩中 --}}
                 <form method="POST" action="{{ route('attendance.break-end') }}">
                     @csrf
                     <button type="submit" class="btn-attendance btn-attendance--secondary">休憩戻</button>
                 </form>
 
             @elseif($status === 'after_work')
-                {{-- パターン4: 退勤済 --}}
                 <p class="completion-message">お疲れ様でした。</p>
             @endif
         </div>

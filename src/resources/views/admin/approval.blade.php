@@ -6,11 +6,6 @@
 @endsection
 
 @section('content')
-{{-- 仮の変数設定（後でコントローラーから渡す） --}}
-@php
-    $isApproved = isset($attendance) && $attendance->status == 2;
-@endphp
-
 <div class="attendance-detail">
     <h1 class="attendance-detail__title">勤怠詳細</h1>
     
@@ -40,24 +35,24 @@
                     </div>
                 </td>
             </tr>
-            @for ($i = 0; $i < 2; $i++)
+            @foreach($attendance->breaks as $i => $break)
             <tr>
                 <th>{{ $i === 0 ? '休憩' : '休憩' . ($i + 1) }}</th>
                 <td>
                     <div class="time-display-group">
                         <span class="time-text">
-                            {{ isset($attendance->breaks[$i]) && $attendance->breaks[$i]->start ? \Carbon\Carbon::parse($attendance->breaks[$i]->start)->format('H:i') : '' }}
+                            {{ $break->start ? \Carbon\Carbon::parse($break->start)->format('H:i') : '' }}
                         </span>
-                        @if(isset($attendance->breaks[$i]) && ($attendance->breaks[$i]->start || $attendance->breaks[$i]->end))
+                        @if($break->start || $break->end)
                             <span class="time-separator">～</span>
                         @endif
                         <span class="time-text">
-                            {{ isset($attendance->breaks[$i]) && $attendance->breaks[$i]->end ? \Carbon\Carbon::parse($attendance->breaks[$i]->end)->format('H:i') : '' }}
+                            {{ $break->end ? \Carbon\Carbon::parse($break->end)->format('H:i') : '' }}
                         </span>
                     </div>
                 </td>
             </tr>
-            @endfor
+            @endforeach
             <tr>
                 <th>備考</th>
                 <td>
